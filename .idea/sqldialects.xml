@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/var/query.sql" dialect="GenericSQL" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/a1971469-9549-4eaa-9769-056e5d62d32c/console.sql" dialect="SQLite" />
+  </component>
+</project>
