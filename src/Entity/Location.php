@@ -29,8 +29,12 @@ class Location
     private ?string $longitude = null;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Measurement::class)]
-    #[ORM\JoinColumn(nullable: false)]
     private Collection $measurements;
+
+    public function __construct()
+    {
+        $this->measurements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,15 +89,9 @@ class Location
         return $this;
     }
 
-    public function getMeasurement(): ?Measurement
+    public function getMeasurements(): Collection
     {
-        return $this->measurement;
-    }
-
-    public function setMeasurement(?Measurement $measurement): static
-    {
-        $this->measurement = $measurement;
-
-        return $this;
+        return $this->measurements;
     }
 }
+

@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Entity;
 
-
+use App\Repository\MeasurementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,50 +20,25 @@ class Measurement
     #[ORM\JoinColumn(name: 'location_id', referencedColumnName: 'id', nullable: false)]
     private ?Location $location = null;
 
-
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0)]
     private ?string $celsius = null;
 
-    public function __construct()
-    {
-        $this->locations = new ArrayCollection(); // Use plural for clarity
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Location>
-     */
-    public function getLocations(): Collection
+    public function getLocation(): ?Location
     {
-        return $this->locations;
+        return $this->location;
     }
 
-    public function addLocation(Location $location): static
+    public function setLocation(?Location $location): static
     {
-        if (!$this->locations->contains($location)) {
-            $this->locations->add($location);
-            $location->setMeasurement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLocation(Location $location): static
-    {
-        if ($this->locations->removeElement($location)) {
-            // set the owning side to null (unless already changed)
-            if ($location->getMeasurement() === $this) {
-                $location->setMeasurement(null);
-            }
-        }
+        $this->location = $location;
 
         return $this;
     }
@@ -90,9 +66,5 @@ class Measurement
 
         return $this;
     }
-    // Dodaj metodę getMeasurementTime
-    public function getMeasurementTime(): ?\DateTimeInterface
-    {
-        return $this->date; // Zwróć datę pomiaru
-    }
 }
+

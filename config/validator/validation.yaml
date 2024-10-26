@@ -1,0 +1,30 @@
+# config/validator/validation.yaml
+App\Entity\Measurement:
+  properties:
+    celsius:
+      - NotBlank: ~
+      - Type: float
+      - Range:
+          min: -100
+          max: 100
+    date:
+      - NotBlank: ~
+      - DateTime: ~
+
+App\Entity\Location:
+  properties:
+    city:
+      - NotBlank: ~
+      - Length:
+          max: 255
+    country:
+      - NotBlank: ~
+      - Length:
+          min: 2
+          max: 2
+    latitude:
+      - NotBlank: ~
+      - Type: float
+    longitude:
+      - NotBlank: ~
+      - Type: float
