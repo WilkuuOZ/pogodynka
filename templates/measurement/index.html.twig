@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Measurements{% endblock %}
@@ -6,17 +5,25 @@
 {% block body %}
     <h1>Measurements</h1>
 
-    <a href="{{ path('measurement_new') }}" class="btn btn-primary">Create new Measurement</a>
+    {% if is_granted('ROLE_WEATHER_DATA_NEW') %}
+        <a href="{{ path('measurement_new') }}" class="btn btn-primary">Create new Measurement</a>
+    {% endif %}
 
     <ul>
         {% for measurement in measurements %}
             <li>
                 {{ measurement.celsius }} °C in {{ measurement.location.city }} on {{ measurement.date|date('Y-m-d') }}
-                <a href="{{ path('measurement_edit', {'id': measurement.id}) }}">edit</a>
-                <form method="post" action="{{ path('measurement_delete', {'id': measurement.id}) }}" style="display:inline-block">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ measurement.id) }}">
-                    <button class="btn btn-link">delete</button>
-                </form>
+
+                {% if is_granted('ROLE_WEATHER_DATA_EDIT') %}
+                    <a href="{{ path('measurement_edit', {'id': measurement.id}) }}">edit</a>
+                {% endif %}
+
+                {% if is_granted('ROLE_WEATHER_DATA_DELETE') %}
+                    <form method="post" action="{{ path('measurement_delete', {'id': measurement.id}) }}" style="display:inline-block">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ measurement.id) }}">
+                        <button class="btn btn-link">delete</button>
+                    </form>
+                {% endif %}
             </li>
         {% else %}
             <li>No measurements found</li>

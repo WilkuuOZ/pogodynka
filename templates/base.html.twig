@@ -33,5 +33,11 @@
         <p>Welcome to your Bootstrap 5 styled page!</p>
     {% endblock %}
 </div>
+{% if is_granted('ROLE_USER') %}
+    <a href="{{ path('app_logout') }}">Logout</a>
+{% else %}
+    <a href="{{ path('app_login') }}">Login</a>
+{% endif %}
+
 </body>
 </html>

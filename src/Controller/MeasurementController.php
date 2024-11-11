@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MeasurementController extends AbstractController
 {
     #[Route('/', name: 'measurement_index', methods: ['GET'])]
+    #[IsGranted('ROLE_WEATHER_DATA_INDEX')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $measurements = $entityManager->getRepository(Measurement::class)->findAll();
@@ -25,6 +26,7 @@ class MeasurementController extends AbstractController
     }
 
     #[Route('/new', name: 'measurement_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_WEATHER_DATA_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $measurement = new Measurement();
@@ -44,6 +46,7 @@ class MeasurementController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'measurement_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_WEATHER_DATA_EDIT')]
     public function edit(Request $request, Measurement $measurement, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MeasurementType::class, $measurement);
@@ -61,6 +64,7 @@ class MeasurementController extends AbstractController
     }
 
     #[Route('/{id}', name: 'measurement_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_WEATHER_DATA_DELETE')]
     public function delete(Request $request, Measurement $measurement, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $measurement->getId(), $request->request->get('_token'))) {
