@@ -66,5 +66,14 @@ class Measurement
 
         return $this;
     }
-}
 
+    /**
+     * Konwertuje temperaturę Celsjusza na Fahrenheita.
+     *
+     * @return float
+     */
+    public function getFahrenheit(): float
+    {
+        return (float) $this->celsius * 9 / 5 + 32;
+    }
+}
